@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/QuizBrain.dart';
 
-import 'Question.dart';
-
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -28,9 +26,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int questionIndex = 0;
   List<Widget> scoreKeeper = [];
-  QuizBrain quizBrain = QuizBrain()
+  QuizBrain quizBrain = QuizBrain();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +40,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionList.elementAt(questionIndex).mQuestion,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -113,24 +110,11 @@ class _QuizPageState extends State<QuizPage> {
       print('User got it right!');
     else
       print('User got it wrong!');
-    showNextQuestion();
-  }
-
-  void showNextQuestion() {
-    if (questionIndex < (quizBrain.questionList.length - 1)) {
-      setState(() {
-        questionIndex++;
-      });
-    } else {
-      setState(() {
-        questionIndex = 0;
-      });
-    }
-    print('QuestionIndex: $questionIndex');
+    quizBrain.nextQuestion();
   }
 
   bool validateAnswer(bool selectedAns) {
-    return selectedAns == quizBrain.questionList.elementAt(questionIndex).mAnswer;
+    return selectedAns == quizBrain.getAnswer();
   }
 }
 
