@@ -87,34 +87,26 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        Row(
-          children: [
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-          ],
-        )
+        Row(children: scoreKeeper)
       ],
     );
   }
 
   void answerSelected(bool selectedAns) {
     print('answerSelected: $selectedAns');
-    bool isCorrectAns = validateAnswer(selectedAns);
-    if (isCorrectAns)
+    bool isCorrectAns = quizBrain.checkAnswer(selectedAns);
+    if (isCorrectAns) {
       print('User got it right!');
-    else
+      setState(() {
+        scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+      });
+    } else {
       print('User got it wrong!');
+      setState(() {
+        scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+      });
+    }
     quizBrain.nextQuestion();
-  }
-
-  bool validateAnswer(bool selectedAns) {
-    return selectedAns == quizBrain.getAnswer();
   }
 }
 

@@ -39,4 +39,8 @@ class QuizBrain {
   void nextQuestion() {
     if (_questionIndex < _questionList.length - 1) _questionIndex++;
   }
+
+  bool checkAnswer(bool userPickedAns) {
+    return (userPickedAns == _questionList.elementAt(_questionIndex).mAnswer);
+  }
 }
