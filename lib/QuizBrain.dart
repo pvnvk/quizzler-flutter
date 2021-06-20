@@ -36,11 +36,19 @@ class QuizBrain {
   String getQuestionText() => _questionList[_questionIndex].mQuestion;
   bool getAnswer() => _questionList[_questionIndex].mAnswer;
   int getQuestionsCount() => _questionList.length;
-  void nextQuestion() {
-    if (_questionIndex < _questionList.length - 1) _questionIndex++;
+  bool nextQuestion() {
+    if (_questionIndex < _questionList.length - 1) {
+      _questionIndex++;
+      return true;
+    } else
+      return false;
   }
 
   bool checkAnswer(bool userPickedAns) {
     return (userPickedAns == _questionList.elementAt(_questionIndex).mAnswer);
+  }
+
+  void reset() {
+    _questionIndex = 0;
   }
 }

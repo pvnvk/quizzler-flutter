@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/QuizBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -106,8 +107,54 @@ class _QuizPageState extends State<QuizPage> {
         scoreKeeper.add(Icon(Icons.close, color: Colors.red));
       });
     }
-    quizBrain.nextQuestion();
+    bool hasMoreQuestions = quizBrain.nextQuestion();
+    if (!hasMoreQuestions) {
+      informUser();
+      scoreKeeper.clear();
+      quizBrain.reset();
+    }
   }
+
+  void informUser() {
+    Alert(
+      context: context,
+      title: "Congrats !!!",
+      desc: "You have completed the quiz. Start again?",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Okay",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+        )
+      ],
+    ).show();
+  }
+
+  /*List<DialogButton> getButtons() {
+    return [
+      DialogButton(
+        child: Text(
+          "FLAT",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        onPressed: () => Navigator.pop(context),
+        color: Color.fromRGBO(0, 179, 134, 1.0),
+      ),
+      DialogButton(
+        child: Text(
+          "GRADIENT",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        onPressed: () => Navigator.pop(context),
+        gradient: LinearGradient(colors: [
+          Color.fromRGBO(116, 116, 191, 1.0),
+          Color.fromRGBO(52, 138, 199, 1.0)
+        ]),
+      )
+    ];
+  }*/
 }
 
 /*
